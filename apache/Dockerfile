@@ -8,6 +8,12 @@ RUN apt-get update && apt-get install -y libpng12-dev libjpeg-dev && rm -rf /var
 	&& docker-php-ext-install gd
 RUN docker-php-ext-install mysqli
 
+EXPOSE 8080
+
+COPY ./contrib/ /opt/openshift
+
+RUN sed -i -f /opt/openshift/etc/apache2conf.sed /etc/apache2/apache2.conf
+
 VOLUME /var/www/html
 
 ENV WORDPRESS_VERSION 4.2.2
